@@ -108,13 +108,13 @@ class Goal(): #the goal class to define goals
         
 
 
-#goals = [Goal((0,10),0.01,0.3,4),Goal((10,0),0.02,0.3,2), Goal((10,10),0.01,0.3,4),Goal((10,5),0.01,0.3,4),Goal((0,5),0.01,0.3,4)]
-goals = [Goal((0,10),0.01,0.3,4),Goal((10,0),0.04,0.3,2)]
+goals = [Goal((0,10),0.01,0.3,4),Goal((10,0),0.02,0.3,2), Goal((10,10),0.01,0.3,4),Goal((10,5),0.01,0.3,4),Goal((0,5),0.01,0.3,4)]
+#goals = [Goal((0,10),0.01,0.3,4),Goal((10,0),0.04,0.3,2)]
 
 
 
-#drones = [Drone((9,0),goals[0]),Drone((0,9),goals[1]),Drone((0,0),goals[2]),Drone((-1,5),goals[3]),Drone((11,5),goals[4])]
-drones = [Drone((9,0),goals[0]),Drone((0,9),goals[1])]
+drones = [Drone((9,0),goals[0]),Drone((0,9),goals[1]),Drone((0,0),goals[2]),Drone((-1,5),goals[3]),Drone((11,5),goals[4])]
+#drones = [Drone((9,0),goals[0]),Drone((0,9),goals[1])]
 
 
 

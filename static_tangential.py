@@ -117,7 +117,7 @@ def anim_func(i):
     for i in range(len(drones)):
         drone = drones[i]
         plt.scatter(drone.currentx,drone.currenty,c=clist[i])
-        ax.add_patch(plt.Circle((drone.currentx[-1],drone.currenty[-1]), 0.45, fill=False))
+        #ax.add_patch(plt.Circle((drone.currentx[-1],drone.currenty[-1]), 0.45, fill=False))
         #print(drone.currentx)
 
     
