@@ -1,5 +1,5 @@
 import numpy as np
-from functions import dist
+from functions import dist, intersection
 
 check_dist = 0.5
 
@@ -25,8 +25,8 @@ class Drone():
             current = self.coords()
             roundabout = self.roundabout
 
-            theta = np.arctan2(roundabout.coords[1]-current[1],roundabout[0]-current[0]) + np.pi/2
-            d = dist(self.coords,roundabout.coords)
+            theta = np.arctan2(roundabout.coords[1]-current[1],roundabout.coords[0]-current[0]) + np.pi/2
+            d = dist(self.coords(),roundabout.coords)
 
             #currently im not adding a case for when d is very very small => drone is on the roundabout
 
@@ -56,12 +56,13 @@ class Drone():
     def check_roundabout(self, drones): #compare distances with all other drones to see if need to form a roundabout
         if not self.roundabout: #only do this if you already don't have a roundabout, if you have a roundabout, continue on it
             for drone in drones:
-                if dist(self.coords(),drone.coords()) < check_dist:
+                if dist(self.coords(),drone.coords()) < check_dist and drone != self:
                     #check if the other drone has a roundabout already, if yes, join it
                     if drone.roundabout:
                         self.roundabout = drone.roundabout
                     else: #form a new roundabout
-                        new_roundabout = Roundabout(((self.coords()[0]+drone.coords()[0])/2,(self.coords()[1]+drone.coords()[1])/2))
+                        #new_roundabout = Roundabout(((self.coords()[0]+drone.coords()[0])/2,(self.coords()[1]+drone.coords()[1])/2))
+                        new_roundabout = Roundabout(intersection(self,drone))
                         self.roundabout = new_roundabout
                         drone.roundabout = new_roundabout
 
@@ -74,13 +75,13 @@ class Drone():
 class Goal(): #goal class
     def __init__(self,coords):
         self.coords=coords
-        self.strength = 0.5
+        self.strength = 0.05
 
 class Roundabout(): #roundabout class
     def __init__(self,coords):
         self.coords = coords
-        self.strength = 0.8
-        self.radius = 0.5
+        self.strength = 0.5
+        self.radius = 0.25
 
 
 colours = ['green','red','blue','pink','grey','orange','magenta']
