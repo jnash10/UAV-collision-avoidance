@@ -5,20 +5,23 @@ check_dist = 0.5
 
 
 class Drone():
-    def __init__(self,start,goal):
+    def __init__(self,start,goal,name=""):
         self.start= start
         self.goal = goal
         self.roundabout = None
         self.currentx = start[0]
         self.currenty = start[1]
-        self.name = ""
+        self.name = name
 
 
 
     def del_goal(self): #return delta values to add that represent pull of goal
         
         theta = np.arctan2((self.goal.coords[1]-self.currenty),(self.goal.coords[0]-self.currentx))
-        return (self.goal.strength*np.cos(theta),self.goal.strength*np.sin(theta))
+        if dist(self.coords(),self.goal.coords) > self.goal.radius:
+            return (self.goal.strength*np.cos(theta),self.goal.strength*np.sin(theta))
+        else:
+            return (0,0)
 
     def del_roundabout(self): #return delta values to add that represent pull of roundabout
         if self.roundabout:#only perform claculatiosn if drone has a roundabout
@@ -65,6 +68,7 @@ class Drone():
                         new_roundabout = Roundabout(intersection(self,drone))
                         self.roundabout = new_roundabout
                         drone.roundabout = new_roundabout
+        
 
     def check_exit(self): #checks if theta(defined above) is les sthan 90 degrees and exits the roundabout if it is
         if self.roundabout:
@@ -76,11 +80,12 @@ class Goal(): #goal class
     def __init__(self,coords):
         self.coords=coords
         self.strength = 0.05
+        self.radius = 0.001 #if you're closer than this that means youve reached the goal
 
 class Roundabout(): #roundabout class
     def __init__(self,coords):
         self.coords = coords
-        self.strength = 0.5
+        self.strength = 0.8
         self.radius = 0.25
 
 
