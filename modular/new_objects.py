@@ -1,7 +1,7 @@
 import numpy as np
 from functions import dist, intersection
 
-check_dist = 0.5
+check_dist = 0.3
 
 
 class Drone():
@@ -13,6 +13,7 @@ class Drone():
         self.currentx = start[0]
         self.currenty = start[1]
         self.name = name
+        self.engaged = False
 
 
 
@@ -60,16 +61,32 @@ class Drone():
     def check_roundabout(self, drones): #compare distances with all other drones to see if need to form a roundabout
 
         for drone in drones: #for every drone
-            d = dist(self.coords(), drone.coords()) #calculate the distance
-            if dist(self.coords(),drone.coords()) < check_dist and drone != self: #if the distance is less than the threshold distance
-                #check if the other drone has a roundabout and if it is closer than the current roundabout distance, if yes, join it
-                if drone.roundabout and dist(drone.roundabout.coords,self.coords()) < dist(intersection(self,drone),self.coords()):
-                    self.roundabout = drone.roundabout
-                else: #form a new roundabout
-                    #new_roundabout = Roundabout(((self.coords()[0]+drone.coords()[0])/2,(self.coords()[1]+drone.coords()[1])/2))
-                    new_roundabout = Roundabout(intersection(self,drone))
-                    self.roundabout = new_roundabout
-                    drone.roundabout = new_roundabout
+            if drone != self:
+                d = dist(self.coords(), drone.coords()) #calculate the distance
+                if d < check_dist:
+                    if not drone.roundabout:
+                        new_roundabout = Roundabout((intersection(drone,self)))
+                        self.roundabout = new_roundabout
+                        self.engaged = True
+                        drone.roundabout = new_roundabout
+                        drone.engaged = True
+                    else:
+                        if drone.engaged:
+                            self.roundabout = drone.roundabout
+                            self.engaged = True
+                        else:
+                                
+                            if dist(drone.coords(),drone.roundabout.coords) < dist(drone.coords(), intersection(drone, self)):
+                                self.roundabout = drone.roundabout
+                                self.engaged = True
+
+                            else:
+                                new_roundabout = Roundabout((intersection(drone,self)))
+                                self.roundabout = new_roundabout
+                                drone.roundabout = new_roundabout
+                                self.engaged = True
+                                drone.engaged = True
+
         
 
     def check_exit(self): #checks if theta(defined above) is les sthan 90 degrees and exits the roundabout if it is
@@ -77,6 +94,7 @@ class Drone():
             angle = self.theta()
             if angle <= np.pi/2:
                 self.roundabout = None
+                self.engaged = False
 
 class Goal(): #goal class
     def __init__(self,coords):
