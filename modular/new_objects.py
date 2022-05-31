@@ -58,17 +58,18 @@ class Drone():
         return np.arccos((a**2 + b**2 - c**2)/(2*a*b))
 
     def check_roundabout(self, drones): #compare distances with all other drones to see if need to form a roundabout
-        if not self.roundabout: #only do this if you already don't have a roundabout, if you have a roundabout, continue on it
-            for drone in drones:
-                if dist(self.coords(),drone.coords()) < check_dist and drone != self:
-                    #check if the other drone has a roundabout already, if yes, join it
-                    if drone.roundabout:
-                        self.roundabout = drone.roundabout
-                    else: #form a new roundabout
-                        #new_roundabout = Roundabout(((self.coords()[0]+drone.coords()[0])/2,(self.coords()[1]+drone.coords()[1])/2))
-                        new_roundabout = Roundabout(intersection(self,drone))
-                        self.roundabout = new_roundabout
-                        drone.roundabout = new_roundabout
+
+        for drone in drones: #for every drone
+            d = dist(self.coords(), drone.coords()) #calculate the distance
+            if dist(self.coords(),drone.coords()) < check_dist and drone != self: #if the distance is less than the threshold distance
+                #check if the other drone has a roundabout and if it is closer than the current roundabout distance, if yes, join it
+                if drone.roundabout and dist(drone.roundabout.coords,self.coords()) < dist(intersection(self,drone),self.coords()):
+                    self.roundabout = drone.roundabout
+                else: #form a new roundabout
+                    #new_roundabout = Roundabout(((self.coords()[0]+drone.coords()[0])/2,(self.coords()[1]+drone.coords()[1])/2))
+                    new_roundabout = Roundabout(intersection(self,drone))
+                    self.roundabout = new_roundabout
+                    drone.roundabout = new_roundabout
         
 
     def check_exit(self): #checks if theta(defined above) is les sthan 90 degrees and exits the roundabout if it is
