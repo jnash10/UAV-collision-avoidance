@@ -106,6 +106,7 @@ def update_roundabout(drones):
                     if dist(compare.coords(),drone.coords()) < 1:
 
                         #if they have a roundabout, join it
+                        
                         if compare.roundabout:
                             drone.roundabout = compare.roundabout
                         
