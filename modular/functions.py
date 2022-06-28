@@ -27,6 +27,16 @@ def dist(a,b):
     return d
 
 
+#create a table of drones x drones dimension
+def init_table(drones):
+    table = np.zeros((len(drones),len(drones)))
+
+    table = table + 1000
+
+    return table
+
+
+
 
 
 

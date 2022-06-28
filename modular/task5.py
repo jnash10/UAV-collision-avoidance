@@ -6,8 +6,9 @@ from objects_3 import *
 from functions import *
 import random
 from random import randrange
+from time import time
 
-
+import pandas as pd
 
 random.seed(6)
 
@@ -15,7 +16,8 @@ fig = plt.figure(figsize=(10,10))
 ax = plt.axes()
 
 
-
+#collision menas distance less than
+collision_dist=0.5
 #goals = [Goal((10,10)),Goal((0,10)), Goal((0,5)),Goal((5,10)),Goal((1,10)),Goal((0.5,10))]
 
 
@@ -36,8 +38,11 @@ plt.ylim(0,101)
 for drone in drones:
     plt.scatter(drone.goal.coords[0],drone.goal.coords[1],s=30,c='blue')
 
+table = init_table(drones)
+
 def anim_func(i):
-    for drone in drones:
+    for j in range(len(drones)):
+        drone = drones[j]
 
 
         plt.scatter(drone.currentx,drone.currenty,s=5)
@@ -49,7 +54,7 @@ def anim_func(i):
         drone.update_pos()
         #printing the roundabouts formed
         if drone.roundabout:
-            ax.add_patch(plt.Circle((drone.roundabout.coords),radius=drone.roundabout.radius,fill=False,alpha=0.5))
+            #ax.add_patch(plt.Circle((drone.roundabout.coords),radius=drone.roundabout.radius,fill=False,alpha=0.5))
             plt.scatter(drone.roundabout.coords[0],drone.roundabout.coords[1],s=10,c='black')
         if drone.name == "green":
             if drone.roundabout:
@@ -57,8 +62,32 @@ def anim_func(i):
             else:
                 print("no")
 
+        #store distances
+        for k in range(j):
+            neighbour = drones[k]
+            d = dist(drone.coords(),neighbour.coords())
+            #print(d,table[j][k],d>table[j][k])
+
+            if d < table[j][k]:
+                table[j][k] = d
+            if d< collision_dist:
+                plt.scatter(drone.roundabout.coords[0],drone.roundabout.coords[1],s=15,c='red')
+
+            
 
 
-animation = FuncAnimation(fig, anim_func, interval = 100)
+
+            
+
+
+
+animation = FuncAnimation(fig, anim_func, interval = 10)
 
 plt.show()
+
+
+print(table)
+
+data = pd.DataFrame(table)
+
+pd.DataFrame.to_csv(data,'data.csv')

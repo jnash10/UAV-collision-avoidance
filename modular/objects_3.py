@@ -1,14 +1,20 @@
 import numpy as np
 from functions import dist, intersection
 
-check_dist = 0.3
+check_dist = 1
 
 
 class Goal(): #goal class
     def __init__(self,coords):
         self.coords=coords
-        self.strength = 0.05
-        self.radius = 0.001 #if you're closer than this that means youve reached the goal
+        self.strength = 0.5
+        self.radius = 0.01 #if you're closer than this that means youve reached the goal
+
+class Roundabout(): #roundabout class
+    def __init__(self,coords):
+        self.coords = coords
+        self.strength = 1
+        self.radius = 1
 
 class Drone():
     def __init__(self,start,goal,name=""):
@@ -103,11 +109,7 @@ class Drone():
                 self.engaged = False
 
 
-class Roundabout(): #roundabout class
-    def __init__(self,coords):
-        self.coords = coords
-        self.strength = 0.8
-        self.radius = 0.25
+
 
 
 colours = ['green','red','blue','pink','grey','orange','magenta']
