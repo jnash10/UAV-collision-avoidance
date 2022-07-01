@@ -39,13 +39,13 @@ for drone in drones:
     plt.scatter(drone.goal.coords[0],drone.goal.coords[1],s=30,c='blue')
 
 table = init_table(drones)
-
+colours = create_colours(n)
 def anim_func(i):
     for j in range(len(drones)):
         drone = drones[j]
 
 
-        plt.scatter(drone.currentx,drone.currenty,s=5)
+        plt.scatter(drone.currentx,drone.currenty,s=5,c=colours[j])
         #check for exiting roundabout
         drone.check_exit()
         #chek for new roundabout
@@ -54,7 +54,7 @@ def anim_func(i):
         drone.update_pos()
         #printing the roundabouts formed
         if drone.roundabout:
-            #ax.add_patch(plt.Circle((drone.roundabout.coords),radius=drone.roundabout.radius,fill=False,alpha=0.5))
+            ax.add_patch(plt.Circle((drone.roundabout.coords),radius=drone.roundabout.radius,fill=False,alpha=0.5))
             plt.scatter(drone.roundabout.coords[0],drone.roundabout.coords[1],s=10,c='black')
         if drone.name == "green":
             if drone.roundabout:
@@ -81,7 +81,7 @@ def anim_func(i):
 
 
 
-animation = FuncAnimation(fig, anim_func, interval = 10)
+animation = FuncAnimation(fig, anim_func, interval = 1)
 
 plt.show()
 

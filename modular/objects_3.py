@@ -1,7 +1,7 @@
 import numpy as np
 from functions import dist, intersection
 
-check_dist = 1
+check_dist = 5
 
 
 class Goal(): #goal class
@@ -14,7 +14,7 @@ class Roundabout(): #roundabout class
     def __init__(self,coords):
         self.coords = coords
         self.strength = 1
-        self.radius = 1
+        self.radius = 2
 
 class Drone():
     def __init__(self,start,goal,name=""):

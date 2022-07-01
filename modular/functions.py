@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 def intersection(d1,d2):
     x1 = d1.coords()[0]
@@ -34,6 +35,13 @@ def init_table(drones):
     table = table + 1000
 
     return table
+
+def create_colours(n):
+    colours = []
+    random.seed(2)
+    for i in range(n):
+        colours.append((random.random(),random.random(),random.random()))
+    return colours
 
 
 
