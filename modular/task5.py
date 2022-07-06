@@ -30,7 +30,8 @@ n = int(input("please enter how many drones you want (integer): "))
 
 for i in range(n):
     drones.append(Drone((randrange(0,101),randrange(0,101)),(randrange(0,101),randrange(0,101))))
- 
+
+#drones = [Drone((0,0),(100,100)),Drone((100,0),(0,100)),Drone((0,100),(100,0)),Drone((100,100),(0,0))]
 
 plt.xlim(0,101)
 plt.ylim(0,101)
@@ -39,7 +40,7 @@ for drone in drones:
     plt.scatter(drone.goal.coords[0],drone.goal.coords[1],s=30,c='blue')
 
 table = init_table(drones)
-colours = create_colours(n)
+colours = create_colours(len(drones))
 def anim_func(i):
     for j in range(len(drones)):
         drone = drones[j]

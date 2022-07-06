@@ -6,6 +6,7 @@ class Drone():
         self.ycoord = position[1]
         self.goal = goal
         self.heading = heading
+        self.engaged = False
 
 
         

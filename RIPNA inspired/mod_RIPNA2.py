@@ -21,13 +21,11 @@ def ripna(drone,drones):
         if timings:
             index = timings.index(min(timings))
             colliding_drone = closeby[index]
-            #print("collision happening")
-            drone.heading = drone.heading + speed*render_time/r_min
-            #colliding_drone.heading = colliding_drone.heading + speed*render_time/r_min
-            #print(dist((drone.xcoord,drone.ycoord),(colliding_drone.xcoord,colliding_drone.ycoord)))
         
-    print(sensed)
-    dubins(drone)
+
+        
+    else:
+        dubins(drone)
 
 
 

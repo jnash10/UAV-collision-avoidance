@@ -4,7 +4,7 @@ from parameters import *
 from functions import *
 
 def check_heading(drone): #returns true if drone heading towards goal
-    #print(drone.heading - arctan2(drone.goal[1]-drone.ycoord,drone.goal[0]-drone.xcoord),drone.heading,arctan2(drone.goal[1]-drone.ycoord,drone.goal[0]-drone.xcoord))
+    print(drone.heading - arctan2(drone.goal[1]-drone.ycoord,drone.goal[0]-drone.xcoord),drone.heading,arctan2(drone.goal[1]-drone.ycoord,drone.goal[0]-drone.xcoord))
     if abs(arctan2(drone.goal[1] - drone.ycoord,drone.goal[0] - drone.xcoord) - drone.heading) < heading_threshold:
         return True
     else:
